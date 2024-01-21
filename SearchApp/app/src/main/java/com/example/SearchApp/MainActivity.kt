@@ -7,6 +7,12 @@ import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+class ActivityDelegate(val queryEdit: EditText) : SearchResultsViewControllerDelegate {
+    override fun getCurrentQuery(): String {
+        return queryEdit.text.toString()
+    }
+}
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,14 +20,19 @@ class MainActivity : ComponentActivity() {
         val resultsView = findViewById<RecyclerView>(R.id.searchResultsView)
         val model = SearchResultsModelImpl()
         val searcher = SearchResultProviderImpl()
-        val adapter = SearchResultsRecyclerViewAdapter(this, model)
-        val controller = SearchResultsViewControllerImpl(adapter, model, searcher)
+        val adapter = SearchResultsRecyclerViewAdapter(resultsView, this, model)
+        val editText = findViewById<EditText>(R.id.editTextText)
+        val controller = SearchResultsViewControllerImpl(
+            adapter,
+            model,
+            searcher,
+            ActivityDelegate(editText)
+        )
         adapter.setController(controller)
         resultsView.adapter = adapter
         resultsView.layoutManager = LinearLayoutManager(this)
         searcher.setDelegate(controller)
         val button = findViewById<ImageButton>(R.id.imageButton)
-        val editText = findViewById<EditText>(R.id.editTextText)
-        button.setOnClickListener{searcher.sendRequest(editText.text.toString())}
+        button.setOnClickListener { searcher.makeSearchQuery(editText.text.toString(), 0, 20) }
     }
 }

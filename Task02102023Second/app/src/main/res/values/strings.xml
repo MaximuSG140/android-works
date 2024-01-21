@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Task02102023Second</string>
+    <string name="fragment_counter_text">Fragment count = %d</string>
+    <string name="back_button">Back</string>
+    <string name="fragment_details_button">Fragment details button</string>
+    <string name="fragment_details_text">Fragment details text</string>
+    <string name="button_one">Button 1</string>
+    <string name="button_two">Button 2</string>
+    <string name="button_three">Button 3</string>
+</resources>

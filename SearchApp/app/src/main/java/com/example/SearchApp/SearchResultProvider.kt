@@ -1,5 +1,5 @@
 package com.example.SearchApp
 
 interface SearchResultProvider {
-    fun sendRequest(query : String)
+    fun makeSearchQuery(query : String, start: Int, count: Int)
 }
